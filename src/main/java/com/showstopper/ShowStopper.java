@@ -1,6 +1,5 @@
 package com.showstopper;
 
-import com.sun.istack.internal.NotNull;
 import ru.lanwen.verbalregex.VerbalExpression;
 
 import java.util.regex.Pattern;
@@ -10,7 +9,7 @@ import java.util.regex.Pattern;
  */
 public class ShowStopper {
 
-    public static Show identify(@NotNull String fileName) {
+    public static Show identify(String fileName) {
         String delimiter = getNameDelimiter(fileName);
         String showName = getShowName(fileName, delimiter);
         int seasonNumber = getSeasonNumber(fileName, delimiter);
