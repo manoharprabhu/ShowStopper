@@ -4,6 +4,7 @@ before_install:
  - chmod +x gradlew
 
 after_success:
+  - if [ -e ./gradlew ]; then ./gradlew codeCoverageReport;else gradle codeCoverageReport;fi
   - bash <(curl -s https://codecov.io/bash)
 
 addons:
