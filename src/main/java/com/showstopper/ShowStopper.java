@@ -19,21 +19,14 @@ public class ShowStopper {
     }
 
     private static String getExtension(String fileName, String delimiter) {
-        if(fileName.length() < 5) {
+        if(!fileName.contains(".")) {
             return "";
         }
-
-        if(fileName.charAt(fileName.length() - 4) != '.') {
-            return "";
-        }
-
-        return fileName.substring(fileName.length() - 3);
+        String[] parts = fileName.split("[.]");
+        return parts[parts.length - 1];
     }
 
     private static int getEpisodeNumber(String fileName, String delimiter) {
-        if(delimiter == null) {
-            return 0;
-        }
         VerbalExpression expression = VerbalExpression.regex()
                 .oneOf("e", "E")
                 .digit().oneOrMore()
@@ -51,9 +44,6 @@ public class ShowStopper {
     }
 
     private static int getSeasonNumber(String fileName, String delimiter) {
-        if(delimiter == null) {
-            return 0;
-        }
         VerbalExpression expression = VerbalExpression.regex()
                 .oneOf("s", "S")
                 .digit().oneOrMore()
@@ -77,45 +67,33 @@ public class ShowStopper {
         String seasonText = expression.getText(fileName);
 
         if("".equals(seasonText)) {
-            if(fileName.length() < 5) {
-                return "";
+            if(!fileName.contains(".")) {
+                return fileName;
             }
-
-            if(fileName.charAt(fileName.length() - 4) != '.') {
-                return "";
+            String[] fileParts = fileName.split("[.]");
+            StringBuilder builder = new StringBuilder();
+            for(int i = 0; i < fileParts.length - 1; i++) {
+                String[] subPart = fileParts[i].split(Pattern.quote(delimiter));
+                for(int j = 0; j < subPart.length; j++) {
+                    builder.append(subPart[j]).append(" ");
+                }
             }
-
-            return fileName.substring(0, fileName.length() - 4);
+            return builder.toString().trim();
         }
 
         String name = fileName.substring(0, fileName.indexOf(seasonText));
 
         String[] parts = name.split(Pattern.quote(delimiter));
-        if(!"".equals(name)) {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < parts.length; i++) {
                 builder.append(parts[i]);
                 builder.append(" ");
             }
             return builder.toString().trim();
-        } else {
-            if(fileName.length() < 5) {
-                return "";
-            }
-
-            if(fileName.charAt(fileName.length() - 4) != '.') {
-                return "";
-            }
-
-            return fileName.substring(0, fileName.length() - 4);
-        }
      }
 
     private static String getNameDelimiter(String fileName) {
-        if(fileName.length() < 5) {
-            return null;
-        }
-        for(char c : fileName.substring(0, fileName.length() - 4).toCharArray()) {
+        for(char c : fileName.toCharArray()) {
             if(c == '.') {
                 return ".";
             }
@@ -124,6 +102,9 @@ public class ShowStopper {
             }
             if(c == '-') {
                 return "-";
+            }
+            if(c == ' ') {
+                return " ";
             }
         }
         return " ";

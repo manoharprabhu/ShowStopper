@@ -119,4 +119,31 @@ public class ShowStopperUT {
                 4,
                 "mkv");
     }
+
+    @Test(timeout = 1000)
+    public void test12() {
+        matchShow(ShowStopper.identify("singletext"),
+                "singletext",
+                0,
+                0,
+                "");
+    }
+
+    @Test(timeout = 1000)
+    public void test13() {
+        matchShow(ShowStopper.identify("homealone.mp4"),
+                "homealone",
+                0,
+                0,
+                "mp4");
+    }
+
+    @Test(timeout = 1000)
+    public void test14() {
+        matchShow(ShowStopper.identify("inglorious_basterds_movie.mkv"),
+                "inglorious basterds movie",
+                0,
+                0,
+                "mkv");
+    }
 }
