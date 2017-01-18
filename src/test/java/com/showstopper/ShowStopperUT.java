@@ -146,4 +146,13 @@ public class ShowStopperUT {
                 0,
                 "mkv");
     }
+
+    @Test(timeout = 1000)
+    public void test15() {
+        matchShow(ShowStopper.identify("Mr.Robot.S02E05.INTERNAL.HDTV.x264-FUM[ettv].mp4"),
+                "Mr Robot",
+                2,
+                5,
+                "mp4");
+    }
 }
