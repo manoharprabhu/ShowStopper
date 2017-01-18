@@ -1,3 +1,6 @@
+[![codecov](https://codecov.io/gh/manoharprabhu/ShowStopper/branch/master/graph/badge.svg)](https://codecov.io/gh/manoharprabhu/ShowStopper)
+
+
 # ShowStopper
 Attempt to parse the names of TV shows as uploaded on torrents and recognize the TV show name, episode number and season number
 
