@@ -2,11 +2,34 @@ group 'manoharprabhu'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'jacoco'
 
 sourceCompatibility = 1.7
 
 repositories {
     mavenCentral()
+}
+
+task codeCoverageReport(type: JacocoReport) {
+
+    // Gather execution data from all subprojects
+    // (change this if you e.g. want to calculate unit test/integration test coverage separately)
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    // Add all relevant sourcesets from the subprojects
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml {
+            enabled true
+            destination "${buildDir}/reports/jacoco/jacoco.xml"
+        }
+        html.enabled true
+        html.destination "${buildDir}/reports/jacoco"
+        csv.enabled false
+    }
 }
 
 dependencies {
